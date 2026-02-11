@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaaS Glitch | Assignment 6</title>
+    <style>
+        :root {
+            --primary-color: #232f3e;
+            --accent-color: #ff9900;
+            --bg-color: #0f172a; /* Darker, cooler background */
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden; /* Keeps the quirky floaters inside */
+        }
+
+        .container {
+            background: var(--glass);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 153, 0, 0.2);
+            text-align: center;
+            max-width: 450px;
+            border: 2px solid var(--accent-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Glitch Name Style */
+        .dev-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px var(--accent-color);
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #000;
+            color: #0f0; /* Matrix green */
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        #quirky-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px dashed #232f3e;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 5px 15px rgba(255, 153, 0, 0.4);
+        }
+
+        #cloud-output {
+            margin-top: 20px;
+            min-height: 50px;
+            font-style: italic;
+            color: #444;
+        }
+
+        /* Floating background emoji */
+        .floater {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            user-select: none;
+            z-index: 1;
+            transition: 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floater" id="follow-cloud">☁️</div>
+
+    <div class="container">
+        <small>PROJECT: PAAS_DEPLOY_6</small>
+        <h1>AWS Amplify Test</h1>
+        
+        <span class="dev-name">Developed by: Kanak</span>
+        
+        <div class="status-badge">> CONNECTION_ESTABLISHED: OK</div>
+
+        <div id="quirky-section">
+            <p>The server is feeling lonely. Click to give it a personality:</p>
+            <button onclick="deployQuirk()">Initialize Persona</button>
+            <div id="cloud-output">Waiting for input...</div>
+        </div>
+
+        <footer>
+            <br>
+            <code style="font-size: 0.7rem;">PICT // TE-IT // 2024-25</code>
+        </footer>
+    </div>
+
+    <script>
+        function deployQuirk() {
+            const quirks = [
+                "🤖 'I'm not a bot, I just code like one.'",
+                "☕ Status: 418 I'm a teapot (and I'm out of coffee).",
+                "🚀 To the moon! (Or at least to the Amplify edge location).",
+                "🐛 I don't have bugs, I have undocumented features.",
+                "🕰️ Fun fact: This code was deployed faster than a PICT canteen order.",
+                "📉 Error 404: Motivation not found. Just kidding, we're 100% up!"
+            ];
+            
+            const output = document.getElementById('cloud-output');
+            const random = Math.floor(Math.random() * quirks.length);
+            
+            // Add a little typewriter effect
+            output.innerText = "";
+            let i = 0;
+            let text = quirks[random];
+            function type() {
+                if (i < text.length) {
+                    output.innerText += text.charAt(i);
+                    i++;
+                    setTimeout(type, 30);
+                }
+            }
+            type();
+        }
+
+        // Quirky mouse follower
+        const cloud = document.getElementById('follow-cloud');
+        document.addEventListener('mousemove', (e) => {
+            cloud.style.left = e.pageX + 'px';
+            cloud.style.top = e.pageY + 'px';
+        });
+    </script>
+</body>
+</html>
